@@ -23,7 +23,6 @@ numerosBotones.forEach((boton)=>{
             }else{resultadoDiv.textContent+='.';}
         }
         else {
-            //if (firstNumber!=undefined&&secondNumber!=undefined){resultadoDiv.textContent='';}
             resultadoDiv.textContent+=boton.textContent;
         }
     })
@@ -44,11 +43,6 @@ operandoBoton.forEach((boton)=>{
             operador=boton.textContent;
             resultadoDiv.textContent=firstNumber;
         }
-
-        /*if (firstNumber!=undefined&&secondNumber!=undefined&&operador!=''){
-                x=calculo(firstNumber,secondNumber,operador);
-                console.log(x);
-            }*/
         
     })
 })
@@ -82,7 +76,7 @@ borradoresBoton.forEach((boton)=>{
                     firstNumber=undefined;
                     secondNumber=undefined;
                 }
-                else{alert("Ingresa un numero o escoge una operacion")}
+                else{alert("Ingresa un numero o escoge una operacion");}
                 
                 break;
         }
@@ -95,43 +89,119 @@ document.addEventListener("keydown",(tecla)=>{
     switch(teclaPresionada){ 
         //numeros y punto
         case '1':
+            resultadoDiv.textContent+=1;
             break;
         case '2':
+            resultadoDiv.textContent+=2;
             break;
         case '3':
+            resultadoDiv.textContent+=3;
             break;
         case '4':
+            resultadoDiv.textContent+=4;
             break;
         case '5':
+            resultadoDiv.textContent+=5;
             break;
         case '6':
+            resultadoDiv.textContent+=6;
             break;
         case '7':
+            resultadoDiv.textContent+=7;
             break;
         case '8':
+            resultadoDiv.textContent+=8;
             break;
         case '9':
+            resultadoDiv.textContent+=9;
             break;
         case '0':
+            resultadoDiv.textContent+=0;
             break;
         case '.':
+            const texto=resultado.textContent;
+            textArr=texto.split('').filter(item => item.includes('.'));
+            if (textArr.length>0){
+                alert("Solo puedes escribir un punto"); 
+            }else{resultadoDiv.textContent+='.';}
             break;
         //Operadores
         case '+':
+            if (firstNumber==undefined){
+                firstNumber=parseFloat(resultadoDiv.textContent);
+                operador='+';
+                resultadoDiv.textContent='';
+            }
+            else {
+                secondNumber=parseFloat(resultadoDiv.textContent);
+                firstNumber=calculo(firstNumber,secondNumber,operador);
+                operador='+';
+                resultadoDiv.textContent=firstNumber;
+            }
             break;
         case '-':
+            if (firstNumber==undefined){
+                firstNumber=parseFloat(resultadoDiv.textContent);
+                operador='-';
+                resultadoDiv.textContent='';
+            }
+            else {
+                secondNumber=parseFloat(resultadoDiv.textContent);
+                firstNumber=calculo(firstNumber,secondNumber,operador);
+                operador='-';
+                resultadoDiv.textContent=firstNumber;
+            }
             break;
         case '*':
+            if (firstNumber==undefined){
+                firstNumber=parseFloat(resultadoDiv.textContent);
+                operador='*';
+                resultadoDiv.textContent='';
+            }
+            else {
+                secondNumber=parseFloat(resultadoDiv.textContent);
+                firstNumber=calculo(firstNumber,secondNumber,operador);
+                operador='*';
+                resultadoDiv.textContent=firstNumber;
+            }            
             break;
         case '/':
+            if (firstNumber==undefined){
+                firstNumber=parseFloat(resultadoDiv.textContent);
+                operador='/';
+                resultadoDiv.textContent='';
+            }
+            else {
+                secondNumber=parseFloat(resultadoDiv.textContent);
+                firstNumber=calculo(firstNumber,secondNumber,operador);
+                operador='/';
+                resultadoDiv.textContent=firstNumber;
+            }
             break;
         //borrar y enter
         case 'Enter':
+            if (firstNumber!=undefined||operador==''){
+                secondNumber=parseFloat(resultado.textContent);
+                solution=calculo(firstNumber,secondNumber,operador);
+                resultadoDiv.textContent=solution;
+                firstNumber=undefined;
+                secondNumber=undefined;
+            }
+            else{alert("Ingresa un numero o escoge una operacion");}
             break;
         case 'Backspace':
+            let text=resultadoDiv.textContent.split('');
+            if (text.length>0){
+                text=text.slice(0,(text.length-1)).join();
+                if(text.includes (',')){
+                    text=text.replaceAll(',','');}
+            }
+            resultadoDiv.textContent=text;
             break;
     }
 })
+
+
 
 
 function redondearDecimal(numero) {
